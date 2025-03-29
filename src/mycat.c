@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "types.h"
+#include "utils.h"
 
 #define KB        1024
 #define NUM_KB    8
@@ -11,7 +13,6 @@ void multi_cat(int argc, char **argv);
 
 int main(int argc, char **argv)
 {
-
     switch(argc)
     {
         case 1:
@@ -35,7 +36,6 @@ void stdin_cat(void)
     while (NULL != fgets(buffer, sizeof(buffer), stdin))
     {
         fputs(buffer, stdout);
-        fflush(stdout);
     }
 }
 
@@ -45,22 +45,27 @@ void simple_cat(const char* filename)
     size_t bytes_read;
     FILE *input_file;
 
+    if (is_directory(filename))
+    {
+        fprintf(stderr, "%s is a directory.\n", filename);
+        return;
+    }
+    
     input_file = fopen(filename, "r");
 
-    if (NULL != input_file)
-    {
-        while ((bytes_read = fread(buffer, sizeof(buffer[0]), sizeof(buffer), input_file)) > 0)
-        {
-            fwrite(buffer, sizeof(buffer[0]), bytes_read, stdout);
-        }
-
-        fclose(input_file);
-    }
-    else 
+    if (NULL == input_file)
     {
         fprintf(stderr, "Error opening file %s: ", filename);
         perror(NULL);
+        return;
     }
+        
+    while ((bytes_read = fread(buffer, sizeof(buffer[0]), sizeof(buffer), input_file)) > 0)
+    {
+        fwrite(buffer, sizeof(buffer[0]), bytes_read, stdout);
+    }
+
+    fclose(input_file);
 }
 
 void multi_cat(int argc, char **argv)
