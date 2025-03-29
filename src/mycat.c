@@ -1,76 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "types.h"
 
-#define BUFSIZE 1024
+#define KB        1024
+#define NUM_KB    8
+#define BUFSIZE   (NUM_KB * KB)
 
-typedef enum 
-{  
-   true,
-   false
-} BOOL_T;
-
-void cat(FILE *input_file);
-BOOL_T validate_args(int argc, char **argv);
+void multi_cat(int argc, char **argv);
+void simple_cat(char* filename);
 
 int main(int argc, char **argv)
 {
-    int result;
-    BOOL_T args_valid;
+    switch(argc)
+    {
+        case 1:
+            /* Read from stdin */
+            break;
+        case 2:
+            simple_cat(argv[1]);
+            break;
+        default:
+            multi_cat(argc, argv);
+            break;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+void simple_cat(char* filename)
+{
+    u8 buffer[BUFSIZE];
+    size_t bytes_read;
     FILE *input_file;
 
-    args_valid = validate_args(argc, argv);
+    input_file = fopen(filename, "r");
 
-    if (true == args_valid)
+    if (NULL != input_file)
     {
-        input_file = fopen(argv[1], "r");
+        while ((bytes_read = fread(buffer, sizeof(u8), sizeof(buffer), input_file)) > 0)
+        {
+            fwrite(buffer, sizeof(u8), bytes_read, stdout);
+        }
 
-        if (NULL != input_file)
-        {
-            cat(input_file);
-            fclose(input_file);
-            result = EXIT_SUCCESS;
-        }
-        else 
-        {
-            printf("Error opening %s\n", argv[1]);
-            result = EXIT_FAILURE;
-        }
+        fclose(input_file);
     }
     else 
     {
-        printf("Usage: mycat <filename>\n");
-        result = EXIT_FAILURE;
+        perror("Error opening file");
     }
- 
-    return result;
 }
 
-BOOL_T validate_args(int argc, char **argv)
+void multi_cat(int argc, char **argv)
 {
-    BOOL_T args_valid;
-    
-    (void)argv; /* currently not used for validation */
+    s32 i;
 
-    args_valid = true;
-
-    if (2 != argc)
+    for (i = 1; i < argc; i++)
     {
-        args_valid = false;
-    }
-
-    return args_valid;
-}
-
-void cat(FILE *input_file)
-{
-    char buffer[BUFSIZE];
-    size_t bytes_read;
-
-    bytes_read = fread(buffer, sizeof(char), sizeof(buffer), input_file);
- 
-    while (bytes_read > 0)
-    {
-        fwrite(buffer, sizeof(char), bytes_read, stdout);
-        bytes_read = fread(buffer, sizeof(char), sizeof(buffer), input_file);
+        simple_cat(argv[i]);
     }
 }
