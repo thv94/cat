@@ -6,15 +6,17 @@
 #define NUM_KB    8
 #define BUFSIZE   (NUM_KB * KB)
 
+void stdin_cat(void);
+void simple_cat(const char* filename);
 void multi_cat(int argc, char **argv);
-void simple_cat(char* filename);
 
 int main(int argc, char **argv)
 {
+
     switch(argc)
     {
         case 1:
-            /* Read from stdin */
+            stdin_cat();
             break;
         case 2:
             simple_cat(argv[1]);
@@ -27,9 +29,20 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-void simple_cat(char* filename)
+void stdin_cat(void)
 {
-    u8 buffer[BUFSIZE];
+    char buffer[BUFSIZE];
+
+    while (NULL != fgets(buffer, sizeof(buffer), stdin))
+    {
+        fputs(buffer, stdout);
+        fflush(stdout);
+    }
+}
+
+void simple_cat(const char* filename)
+{
+    char buffer[BUFSIZE];
     size_t bytes_read;
     FILE *input_file;
 
@@ -37,22 +50,23 @@ void simple_cat(char* filename)
 
     if (NULL != input_file)
     {
-        while ((bytes_read = fread(buffer, sizeof(u8), sizeof(buffer), input_file)) > 0)
+        while ((bytes_read = fread(buffer, sizeof(char), sizeof(buffer), input_file)) > 0)
         {
-            fwrite(buffer, sizeof(u8), bytes_read, stdout);
+            fwrite(buffer, sizeof(char), bytes_read, stdout);
         }
 
         fclose(input_file);
     }
     else 
     {
-        perror("Error opening file");
+        fprintf(stderr, "Error opening file %s: ", filename);
+        perror(NULL);
     }
 }
 
 void multi_cat(int argc, char **argv)
 {
-    s32 i;
+    int i;
 
     for (i = 1; i < argc; i++)
     {
