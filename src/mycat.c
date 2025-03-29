@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "types.h"
 
 #define KB        1024
 #define NUM_KB    8
@@ -50,9 +49,9 @@ void simple_cat(const char* filename)
 
     if (NULL != input_file)
     {
-        while ((bytes_read = fread(buffer, sizeof(char), sizeof(buffer), input_file)) > 0)
+        while ((bytes_read = fread(buffer, sizeof(buffer[0]), sizeof(buffer), input_file)) > 0)
         {
-            fwrite(buffer, sizeof(char), bytes_read, stdout);
+            fwrite(buffer, sizeof(buffer[0]), bytes_read, stdout);
         }
 
         fclose(input_file);
