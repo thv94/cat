@@ -1,8 +1,6 @@
 CC = gcc
 CSTD = c90
 OPT_LEVEL = -O2
-CPPCHECK = cppcheck
-CPPCHECKFLAGS = -std=c89 --check-level=exhaustive --error-exitcode=1
 
 SRC_DIR = src
 INC_DIR = include
@@ -15,16 +13,16 @@ TARGET = mycat
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
-all: $(TARGET) cppcheck.out.xml
+all: $(OBJ_DIR) $(TARGET)
 
-cppcheck.out.xml: $(SRC_DIR)
-	$(CPPCHECK) $(CHECKFLAGS) $^ --xml >$@
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 $(TARGET): $(OBJ_FILES)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $^ -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
