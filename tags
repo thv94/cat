@@ -1,0 +1,51 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/mnt/c/Users/user/MyStuff/Code/cat/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+$(BUILD_DIR)	makefile	/^$(BUILD_DIR):$/;"	t
+$(BUILD_DIR)/$(TARGET)	makefile	/^$(BUILD_DIR)\/$(TARGET): $(OBJ_FILES)$/;"	t
+$(OBJ_DIR)	makefile	/^$(OBJ_DIR):$/;"	t
+$(OBJ_DIR)/%.o	makefile	/^$(OBJ_DIR)\/%.o: $(SRC_DIR)\/%.c | $(OBJ_DIR)$/;"	t
+BUFSIZE	src/mycat.c	/^#define BUFSIZE /;"	d	file:
+BUILD_DIR	makefile	/^	BUILD_DIR = $(DEBUG_BUILD_DIR)$/;"	m
+BUILD_DIR	makefile	/^	BUILD_DIR = $(RELEASE_BUILD_DIR)$/;"	m
+CC	makefile	/^CC = gcc$/;"	m
+CFLAGS	makefile	/^CFLAGS = -Wall -Wextra -Werror -Wpedantic -I$(INC_DIR) -std=$(CSTD) -Wshadow -Wpointer-arith -Wc/;"	m
+CSTD	makefile	/^CSTD = c90$/;"	m
+DEBUG	makefile	/^DEBUG ?= 0$/;"	m
+DEBUG_BUILD_DIR	makefile	/^DEBUG_BUILD_DIR = builds\/debug$/;"	m
+Features	README.md	/^# Features$/;"	c
+INC_DIR	makefile	/^INC_DIR = include$/;"	m
+KB	src/mycat.c	/^#define KB /;"	d	file:
+LINE_NUM_BUFF_SIZE	src/mycat.c	/^#define LINE_NUM_BUFF_SIZE /;"	d	file:
+NUM_KB	src/mycat.c	/^#define NUM_KB /;"	d	file:
+OBJ_DIR	makefile	/^OBJ_DIR = .o$/;"	m
+OBJ_FILES	makefile	/^OBJ_FILES = $(patsubst $(SRC_DIR)\/%.c,$(OBJ_DIR)\/%.o,$(SRC_FILES))$/;"	m
+RELEASE_BUILD_DIR	makefile	/^RELEASE_BUILD_DIR = builds\/release$/;"	m
+SRC_DIR	makefile	/^SRC_DIR = src$/;"	m
+SRC_FILES	makefile	/^SRC_FILES = $(wildcard $(SRC_DIR)\/*.c)$/;"	m
+TARGET	makefile	/^TARGET = mycat$/;"	m
+TYPES_H	include/types.h	/^#define TYPES_H$/;"	d
+UTILS_H	include/utils.h	/^#define UTILS_H$/;"	d
+Usage	README.md	/^# Usage$/;"	c
+all	makefile	/^all: $(OBJ_DIR) $(BUILD_DIR)\/$(TARGET)$/;"	t
+b_false	include/types.h	/^    b_false = 0,$/;"	e	enum:bool_t
+b_true	include/types.h	/^    b_true = 1$/;"	e	enum:bool_t
+bool_t	include/types.h	/^typedef enum bool_t$/;"	g
+bool_t	include/types.h	/^} bool_t;$/;"	t	typeref:enum:bool_t
+cat	README.md	/^# cat$/;"	c
+clean	makefile	/^clean:$/;"	t
+debug	makefile	/^debug:$/;"	t
+is_directory	src/utils.c	/^bool_t is_directory(const char* path)$/;"	f	typeref:typename:bool_t
+main	src/mycat.c	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
+multi_cat	src/mycat.c	/^void multi_cat(int argc, char **argv)$/;"	f	typeref:typename:void
+release	makefile	/^release:$/;"	t
+simple_cat	src/mycat.c	/^void simple_cat(const char* filename)$/;"	f	typeref:typename:void
+stdin_cat	src/mycat.c	/^void stdin_cat(void)$/;"	f	typeref:typename:void
