@@ -1,11 +1,7 @@
 # cat
- My version of the cat utility in ANSI C. Supports basic cat functionality with no flags.
+ My version of the cat utility in ANSI C. Supports stdin and one or more files, both with optional line numbering.
 
 # Usage
 ```
-cat [FILE...]
+cat [-n] <FILE...>
 ```
-
-# Features
-* Supports stdin with no arguments
-* Supports single or multiple files to stdout
