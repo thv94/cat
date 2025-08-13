@@ -4,6 +4,6 @@
 #include "types.h"
 #include <sys/stat.h>
 
-bool_t is_directory(const char* path);
+BOOL_T is_directory(const char* path);
 
 #endif /* UTILS_H */

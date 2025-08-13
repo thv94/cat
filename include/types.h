@@ -1,10 +1,10 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-typedef enum bool_t
+typedef enum BOOL_T
 {
-    b_false = 0,
-    b_true = 1
-} bool_t;
+    FALSE = 0,
+    TRUE = 1
+} BOOL_T;
 
 #endif /* TYPES_H */
