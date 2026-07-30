@@ -1,3 +1,5 @@
 mycat
 bin
 build
+/.o
+cppcheck.out.xml
